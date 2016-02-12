@@ -71,11 +71,13 @@ View(mean_std)
 # Creating a second, independent tidy data set with the
 # average of each variable for each activity and each subject
 
-global_averages <- train_test_merged %>%
-        select(id_train_test, subject, activity, 5:length(train_test_merged)) %>%
+global_averages <- mean_std %>%
+        select(id_train_test, subject, activity, 5:length(mean_std)) %>%
         group_by(id_train_test, subject, activity) %>%
         summarize_each(funs(mean)) %>%
         arrange(id_train_test, subject, activity)
 
 write.table(global_averages, file = "global_averages.csv")
 View(global_averages)
+
+write.table(global_averages, file = "global_averages.txt", row.name = FALSE)
